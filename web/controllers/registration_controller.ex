@@ -14,6 +14,7 @@ defmodule Pt.RegistrationController do
     case Repo.insert(changeset) do
       {:ok, user} ->
         conn
+        |> put_session(:user_id, user.id) # login user after registering
         |> put_flash(:info, "Account created!")
         |> redirect(to: page_path(conn, :index))
       {:error, changeset} ->
